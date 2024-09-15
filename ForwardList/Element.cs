@@ -11,16 +11,16 @@ namespace ForwardList
 		public int Data { get; set; }		//Значение элемента
 		public Element pNext { get; set; }	//Следующий элемент
 
-		public Element (int Data, Element pNext)
+		public Element (int Data, Element pNext = null)
 		{
 			this.Data = Data;
 			this.pNext = pNext;
-            Console.WriteLine($"EConstr:\t{GetHashCode()}");
+            Console.WriteLine($"EConstr: \t {GetHashCode()}");
 		}
 
 		~Element()
 		{
-            Console.WriteLine($"EDestr:\t{GetHashCode()}");
+            Console.WriteLine($"EDestr: \t {GetHashCode()}");
 		}
 	}
 }
