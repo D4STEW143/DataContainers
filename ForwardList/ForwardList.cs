@@ -3,18 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ForwardList
 {
 	internal class ForwardList
 	{
 		Element Head;
-		public uint Size {  get; private set; }
+		public uint Size { get; private set; }
 		public ForwardList()
 		{
 			Head = null;
 			Size = 0;
 			Console.WriteLine($"LConstr: \t {GetHashCode()}");
+		}
+		public ForwardList(int[] values)
+		{
+			if (values.Length == 0)
+				throw new ArgumentException("Массив не должен быть пустым.");
+
+			Head = new Element(values[0]);
+			Element current = Head;
+
+			for (int i = 1; i < values.Length; i++)
+			{
+				current.pNext = new Element(values[i]);
+				current = current.pNext;
+			}
 		}
 		~ForwardList()
 		{
@@ -29,14 +44,18 @@ namespace ForwardList
 		//Adding elements:
 		public void push_front(int Data)
 		{
-			//1) Создаем новый элемент
+			/*//1) Создаем новый элемент
 			Element New = new Element(Data);
 
 			//2) Подключаем новый элемент к списку
-			New.pNext = Head;
+			//New.pNext = Head;
 
 			//3) Смещаем голову на новый элемент
-			Head = New;
+			Head = New;*/
+
+			Head = new Element(Data, Head);// { pNext = Head } - Не понимаю почему такой вариант тоже работает
+			//Создается анонимный объект с параметрами Data для data, и Head для pNext, который потом присваивается голове.
+
 			Size++;
 		}
 		public void push_back(int Data)
@@ -72,7 +91,7 @@ namespace ForwardList
 				New.pNext = Temp.pNext;
 				Temp.pNext = New;
 
-				Size++; 
+				Size++;
 			}
 		}
 
@@ -96,6 +115,18 @@ namespace ForwardList
 				Element Temp = Head;
 				while (Temp.pNext.pNext != null) Temp = Temp.pNext;
 				Temp.pNext = null;
+			}
+			Size--;
+		}
+		public void erase(int Index)
+		{
+			if (Index > Size) return;
+			if (Index == 0) pop_front();
+			else
+			{
+				Element Temp = Head;
+				for (int i = 0; i < Index - 1; i++) Temp = Temp.pNext;
+				Temp.pNext = Temp.pNext.pNext;
 			}
 			Size--;
 		}

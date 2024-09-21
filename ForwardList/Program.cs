@@ -1,5 +1,5 @@
-﻿//#define BASE_CHECK
-#define HOMEWORK
+﻿#define BASE_CHECK
+//#define HOMEWORK
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,15 +34,21 @@ namespace ForwardList
 			int value = Convert.ToInt32(Console.ReadLine());
 
 			list.insert(value, index);
-			list.Print(); 
+			list.Print();
 
+			Console.Write("Введите индекс удаляемого элемента: ");
+			int index1 = Convert.ToInt32(Console.ReadLine());
+			list.erase(index1);
+			list.Print();
 #endif
 
 #if HOMEWORK
 			ForwardList list = new ForwardList() { 3, 5, 8, 13, 21 };
 			foreach (int i in list)
 			{
-                Console.Write(i+"\t");
+				Element pNext = null;
+
+				Console.Write(i+"\t");
 			}
             Console.WriteLine();
 #endif
