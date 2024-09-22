@@ -1,5 +1,5 @@
-﻿#define BASE_CHECK
-//#define HOMEWORK
+﻿//#define BASE_CHECK
+#define HOMEWORK
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,13 +44,14 @@ namespace ForwardList
 
 #if HOMEWORK
 			ForwardList list = new ForwardList() { 3, 5, 8, 13, 21 };
+			list.Print();
 			foreach (int i in list)
 			{
 				Element pNext = null;
 
-				Console.Write(i+"\t");
+				Console.Write(i + "\t");
 			}
-            Console.WriteLine();
+			Console.WriteLine();
 			//Не смог разобраться с IEnumerable.GetEnumerator
 #endif
 

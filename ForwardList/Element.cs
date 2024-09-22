@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Remoting.Messaging;
 
 namespace ForwardList
 {
 	internal class Element
 	{
 		public int Data { get; set; }		//Значение элемента
-		public Element pNext { get; set; }	//Следующий элемент
+		public Element pNext { get; set; }  //Следующий элемент
 
 		public Element (int Data, Element pNext = null)
 		{
