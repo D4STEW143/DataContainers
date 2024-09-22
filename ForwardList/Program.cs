@@ -2,6 +2,7 @@
 #define HOMEWORK
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -43,16 +44,14 @@ namespace ForwardList
 #endif
 
 #if HOMEWORK
-			ForwardList list = new ForwardList() { 3, 5, 8, 13, 21 };
+			ForwardList<int> list = new ForwardList<int>() { 3, 5, 8, 13, 21 };
 			list.Print();
-			foreach (int i in list)
-			{
-				Element pNext = null;
-
-				Console.Write(i + "\t");
-			}
+			foreach (int i in list)Console.Write($"{i}\t");
 			Console.WriteLine();
-			//Не смог разобраться с IEnumerable.GetEnumerator
+			ForwardList<double> d_list = new ForwardList<double>() { 2.7, 3.14, 5.2, 8.3 };
+			foreach (double i in d_list) Console.Write($"{i}\t"); Console.WriteLine();
+			ForwardList<string> s_list = new ForwardList<string>() { "a", "b", "c", "d", "e" };
+			foreach (string i in s_list) Console.Write($"{i}\t"); Console.WriteLine();
 #endif
 
 		}

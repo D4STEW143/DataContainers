@@ -8,29 +8,29 @@ using System.Xml.Linq;
 
 namespace ForwardList
 {
-	internal class ForwardList: IEnumerable
+	internal class ForwardList<T>: IEnumerable
 	{
-		Element Head;
+		Element<T> Head;
 		public uint Size { get; private set; }
-		public IEnumerator GetEnumerator() => new Enumerator(Head);
-		public void Add(int Data) => push_back(Data);
+		public IEnumerator GetEnumerator() => new Enumerator<T>(Head);
+		public void Add(T Data) => push_back(Data);
 		public ForwardList()
 		{
 			Head = null;
 			Size = 0;
 			Console.WriteLine($"LConstr: \t {GetHashCode()}");
 		}
-		public ForwardList(int[] values)
+		public ForwardList(T[] values)
 		{
 			if (values.Length == 0)
 				throw new ArgumentException("Массив не должен быть пустым.");
 
-			Head = new Element(values[0]);
-			Element current = Head;
+			Head = new Element<T>(values[0]);
+			Element<T> current = Head;
 
 			for (int i = 1; i < values.Length; i++)
 			{
-				current.pNext = new Element(values[i]);
+				current.pNext = new Element<T>(values[i]);
 				current = current.pNext;
 			}
 		}
@@ -45,7 +45,7 @@ namespace ForwardList
 		}
 
 		//Adding elements:
-		public void push_front(int Data)
+		public void push_front(T Data)
 		{
 			/*//1) Создаем новый элемент
 			Element New = new Element(Data);
@@ -56,37 +56,37 @@ namespace ForwardList
 			//3) Смещаем голову на новый элемент
 			Head = New;*/
 
-			Head = new Element(Data, Head);// { pNext = Head } - Не понимаю почему такой вариант тоже работает. Это автосвойство?
+			Head = new Element<T>(Data, Head);// { pNext = Head } - Не понимаю почему такой вариант тоже работает. Это автосвойство?
 
 			Size++;
 		}
-		public void push_back(int Data)
+		public void push_back(T Data)
 		{
 			if (Head == null) push_front(Data);
 			else
 			{
-				Element Temp = Head;
+				Element<T> Temp = Head;
 				while (Temp.pNext != null) Temp = Temp.pNext;
-				Temp.pNext = new Element(Data);
+				Temp.pNext = new Element<T>(Data);
 			}
 			Size++;
 		}
 
-		public void insert(int Data, int Index)
+		public void insert(T Data, int Index)
 		{
 			if (Index > Size) return;
 			if (Index == 0) push_front(Data);
 			else
 			{
 				//Доходим до нужного элемента
-				Element Temp = Head;
+				Element<T> Temp = Head;
 				for (int i = 0; i < Index - 1; i++) Temp = Temp.pNext;
 				//if (Temp.pNext == null) break;
 				//else Temp = Temp.pNext;
 				//Создаем новый элемент и
 				//Включаем элемент в список
 				//New.pNext = Temp.pNext;
-				Temp.pNext = new Element(Data, Temp);
+				Temp.pNext = new Element<T>(Data, Temp);
 
 				Size++;
 			}
@@ -109,7 +109,7 @@ namespace ForwardList
 			if (Head.pNext == null) pop_front();
 			else
 			{
-				Element Temp = Head;
+				Element<T> Temp = Head;
 				while (Temp.pNext.pNext != null) Temp = Temp.pNext;
 				Temp.pNext = null;
 			}
@@ -121,7 +121,7 @@ namespace ForwardList
 			if (Index == 0) pop_front();
 			else
 			{
-				Element Temp = Head;
+				Element<T> Temp = Head;
 				for (int i = 0; i < Index - 1; i++) Temp = Temp.pNext;
 				Temp.pNext = Temp.pNext.pNext;
 			}
@@ -131,7 +131,7 @@ namespace ForwardList
 		//Methods
 		public void Print()
 		{
-			Element Temp = Head;    //Temp - итератор
+			Element<T> Temp = Head;    //Temp - итератор
 									//Итератор это указатель, при помощи которого можно получить доступ к элементам структуры данных.
 			while (Temp != null)
 			{
