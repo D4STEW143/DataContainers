@@ -51,6 +51,7 @@ namespace ForwardList
 				Console.Write(i+"\t");
 			}
             Console.WriteLine();
+			//Не смог разобраться с IEnumerable.GetEnumerator
 #endif
 
 		}

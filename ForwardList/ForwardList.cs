@@ -54,7 +54,6 @@ namespace ForwardList
 			Head = New;*/
 
 			Head = new Element(Data, Head);// { pNext = Head } - Не понимаю почему такой вариант тоже работает. Это автосвойство?
-			//Создается анонимный экземпляр с параметрами Data для data, и Head для pNext, который потом присваивается голове.
 
 			Size++;
 		}
