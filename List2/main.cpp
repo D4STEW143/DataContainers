@@ -125,7 +125,7 @@ public:
 		}
 	}
 
-	//All
+//All
 	void print()const
 	{
 		cout << "Head: \t" << Head << endl;
