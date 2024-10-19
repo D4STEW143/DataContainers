@@ -29,7 +29,7 @@ class List
 		friend class List;
 	}*Head, * Tail;	//Объявляем 2 указателя на объекты класса Element
 											//непосредственно после описания класса
-	size_t size;	//Количество элементов списка
+	size_t size;							//Количество элементов списка
 
 	class ConstBaseIterator
 	{
