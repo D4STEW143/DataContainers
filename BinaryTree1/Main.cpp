@@ -6,7 +6,7 @@ using std::cin;
 using std::cout;
 using std::endl;
 
-#define DEBUG
+//#define DEBUG
 
 #define tab '\t'
 #define delimiter "\n------------------------------------------------\n"
@@ -114,6 +114,14 @@ private:
 			cout << Root->Data << tab;
 			print(Root->pRight);
 		}
+	int depth(Element* Root)const
+	{
+		if (Root == nullptr) return 0;
+		int lDepth = depth(Root->pLeft);
+		int rDepth = depth(Root->pRight);
+		return std::max(lDepth, rDepth) + 1;
+
+	}
 public:
 	Element* getRoot()const
 	{
@@ -177,6 +185,20 @@ public:
 		print(Root);
 		cout << endl;
 	}
+	int depth()const
+	{
+		return depth(Root);
+	}
+	void printAsTree(Element* Root, int level)
+	{
+		if (Root)
+		{
+			printAsTree(Root->pLeft, level + 1);
+			for (int i = 0;i < level;i++) cout << "   ";
+			cout << Root->Data << endl;
+			printAsTree(Root->pRight, level + 1);
+		}
+	}
 };
 
 class UniqueTree :public Tree
@@ -203,8 +225,10 @@ public:
 	}
 };
 
-//#define BASE_CHECK
-#define PERFECT_CHECK
+#define BASE_CHECK
+#define EFFICIENCY
+//#define UNIQUE_TREE
+//#define PERFECT_CHECK
 
 void main()
 {
@@ -219,22 +243,56 @@ void main()
 		{
 			tree.insert(rand() % 100);
 		}
-		tree.print();
-		clock_t start = clock();
+		//tree.print();
 		cout << "Минимальное значение: " << tree.minValue() << endl;
-		clock_t end = clock();
-		cout << "Выполнено за " << double(end - start) / CLOCKS_PER_SEC << " секунд. \n" ;
 		cout << "Максимально значение дерева:" << tree.maxValue() << endl;
 		cout << "Количество элементов дерева:   " << tree.count() << endl;
 		cout << "Сумма элементов дерева: " << tree.sum() << endl;
 		cout << "Среднеарифметическое дерева: " << tree.avg() << endl;
+		cout << "Глубина дерева: " << tree.depth() << endl;
 		int value;
-		cout << "Введите значение элемента для удаления: "; cin >> value;
+		cout << "Введите значение элемента для удаления: (Используй 24) "; cin >> value;
+		clock_t start6 = clock();
 		tree.erase(value);
-		tree.print();
+		clock_t end6 = clock();
+		//tree.print();
 		cout << "Количество элементов массива:   " << tree.count() << endl;
+		tree.printAsTree(tree.getRoot(), 0);
 		cout << delimiter << endl;
 
+#ifdef EFFICIENCY
+		clock_t start = clock();
+		tree.minValue();
+		clock_t end = clock();
+		cout << "Минимальное значение найдено за " << double(end - start) << " тиков. (~" << double(end - start) / CLOCKS_PER_SEC << " секунд). \n";
+		clock_t start1 = clock();
+		tree.maxValue();
+		clock_t end1 = clock();
+		cout << "Максимальное значение найдено за " << double(end1 - start1) << " тиков. (~" << double(end1 - start1) / CLOCKS_PER_SEC << " секунд). \n";
+		clock_t start2 = clock();
+		tree.count();
+		clock_t end2 = clock();
+		cout << "Количество элементов найдено за " << double(end2 - start2) << " тиков. (~" << double(end2 - start2) / CLOCKS_PER_SEC << " секунд). \n";
+		clock_t start3 = clock();
+		tree.sum();
+		clock_t end3 = clock();
+		cout << "Сумма элементов найдено за " << double(end3 - start3) << " тиков. (~" << double(end3 - start3) / CLOCKS_PER_SEC << " секунд). \n";
+		clock_t start4 = clock();
+		tree.avg();
+		clock_t end4 = clock();
+		cout << "Средне-арфиметическое элементов найдено за " << double(end4 - start4) << " тиков. (~" << double(end4 - start4) / CLOCKS_PER_SEC << " секунд). \n";
+		clock_t start5 = clock();
+		tree.depth();
+		clock_t end5 = clock();
+		cout << "Глубина дерева найдена за " << double(end5 - start5) << " тиков. (~" << double(end5 - start5) / CLOCKS_PER_SEC << " секунд). \n";
+
+		cout << "Удаление выполнено за " << double(end6 - start6) << " тиков. (~" << double(end6 - start6) / CLOCKS_PER_SEC << " секунд). \n";
+
+		cout << delimiter << endl;
+#endif // EFFICIENCY
+
+
+#ifdef UNIQUE_TREE
 		UniqueTree u_tree;
 		for (int i = 0; i < n; i++)
 		{
@@ -246,6 +304,8 @@ void main()
 		cout << "Количество элементов: " << u_tree.count() << endl;
 		cout << "Сумма всех элементов: " << u_tree.sum() << endl;
 		cout << "Средне-арифметическое всех элементов: " << u_tree.avg() << endl;
+#endif // UNIQUE_TREE
+
 	}
 	catch (const std::exception& e)
 	{
